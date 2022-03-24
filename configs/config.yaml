@@ -1,0 +1,97 @@
+# Whatever is in this file will override the experiment
+defaults:
+  - experiment/search.yaml
+  - _self_
+
+experiment_save_path: ray_results
+
+# Experiment params
+debug: false
+training_timesteps: 5000000
+mode: "headless"
+dist_tol: 0.75
+
+eval_freq: 20000
+save_freq: 50000
+resume: true
+
+hide_robot: true
+
+# scene
+scene: igibson
+scene_id: Rs_int
+
+# Don't use objects for traversable map
+trav_map_type: no_obj
+
+seed: 0
+clutter: false
+build_graph: true
+load_texture: true
+pybullet_load_texture: false
+should_open_all_doors: true
+texture_scale: 0.5
+
+num_envs: 1
+
+# domain randomization
+texture_randomization_freq: null
+object_randomization_freq: null
+
+robot:
+  name: Turtlefast
+  action_type: discrete
+  action_normalize: true
+  proprio_obs:
+    - trunk_qpos
+    - camera_qpos
+  reset_joint_pos: null
+  base_name: null
+  scale: 1.0
+  self_collision: true
+  rendering_params: null
+  controller_config:
+    base:
+      name: DifferentialDriveController
+    camera:
+      name: JointController
+
+
+# PPO parameters
+batch_size: 128
+gamma: 0.99
+gae_lambda: 0.9
+n_steps: 4096
+n_epochs: 30
+learning_rate: 1e-4
+
+# task
+randomize_agent_reset: true
+randomize_obj_reset: true
+
+# termination condition
+max_step: 500
+
+not_load_object_categories: [ carpet ]
+load_object_categories: [ agent, floor ]
+
+# image
+image_width: 128
+image_height: 128
+vertical_fov: 120
+
+# depth
+depth_low: 0.0
+depth_high: 10.0
+
+# sensor noise
+depth_noise_rate: 0.0
+scan_noise_rate: 0.0
+
+model:
+  conv_filters: [[32, 8, 4], [64, 4, 2], [64, 3, 1]]
+
+hydra:
+  output_subdir: ${experiment_save_path}/${experiment_name}/hydra
+  run:
+    dir: ${experiment_save_path}/${experiment_name}/hydra_logging
