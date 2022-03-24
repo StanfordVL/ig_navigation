@@ -32,7 +32,7 @@ pybullet_load_texture: false
 should_open_all_doors: true
 texture_scale: 0.5
 
-num_envs: 1
+num_envs: 2
 
 # domain randomization
 texture_randomization_freq: null

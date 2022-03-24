@@ -46,9 +46,9 @@ class SearchEnv(iGibsonEnv):
 
         self.task = SearchTask(self)
 
-    def render(self, mode =("rgb")):
+    def render(self, mode):
         assert self.simulator.renderer != None
-        rgb = self.simulator.renderer.render_robot_cameras(modes=mode)[0]
+        rgb = self.simulator.renderer.render_robot_cameras(modes=("rgb"))[0]
         return (rgb[..., :3] * 255).astype(np.uint8)
 
     def reset(self):
