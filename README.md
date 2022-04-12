@@ -4,6 +4,18 @@
 * Up-to-date Nvidia driver
 * 64 GB ram (~ 6 gb per parallel environment)
 
+# Introduction
+
+This repository showcases how to make an "intermediate" level project with iGibson, it includes:
+
+* Distributed training with ray
+* declarative configuration of experiments with hydra
+* using a custom model override for ray capable of mixed observation modalities
+* rendering the environment with a parallelized evaluation environment during training
+* implementing a custom task, custom termination condition, and custom reward function
+* saving/loading agent state
+* pinning all dependencies, and seeding the environment, for reproducible RL
+
 # Installation 
 
 Deterministic installation via conda-lock:
