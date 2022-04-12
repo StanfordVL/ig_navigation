@@ -12,7 +12,7 @@ class SearchReward(BaseRewardFunction):
     def __init__(self, config):
         super(SearchReward, self).__init__(config)
         self.success_reward = self.config["success_reward_scaling"]
-        self.dist_tol = self.config.get("dist_tol", 0.5)
+        self.dist_tol = self.config.get("dist_tol", 1.0)
         self.name = "search_reward"
 
     def get_reward(self, task, env):
@@ -32,7 +32,7 @@ class SearchReward(BaseRewardFunction):
         )
 
         body_ids = env.robots[0].states[ObjectsInFOVOfRobot].get_value()
-        in_view = np.count_nonzero(body_ids == task.target_obj.get_body_ids()[0]) > 100
+        in_view = task.target_obj.get_body_ids()[0] in body_ids
         success = success and in_view
         reward = self.success_reward if success else 0.0
         return reward
