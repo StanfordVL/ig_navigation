@@ -6,12 +6,16 @@ import numpy as np
 import ray
 from omegaconf import OmegaConf
 from ray.rllib.agents import ppo
+from ray.rllib.models import ModelCatalog
 from ray.tune.logger import UnifiedLogger
 from ray.tune.registry import register_env
 
 import ig_navigation
 from ig_navigation.callbacks import DummyCallback, MetricsCallback
+from ig_navigation.model  import ComplexInputNetwork
 
+# Add a custom example feature extractor
+ModelCatalog.register_custom_model("complex_input_network", ComplexInputNetwork)
 
 def igibson_env_creator(env_config):
     from ig_navigation.igibson_env import SearchEnv
