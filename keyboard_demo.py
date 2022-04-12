@@ -3,7 +3,8 @@ from collections import defaultdict
 import cv2
 import hydra
 import matplotlib.pyplot as plt
-from igibson.render.mesh_renderer.mesh_renderer_settings import MeshRendererSettings
+from igibson.render.mesh_renderer.mesh_renderer_settings import \
+    MeshRendererSettings
 from omegaconf import OmegaConf
 
 import ig_navigation

@@ -1,10 +1,8 @@
 import numpy as np
 import pybullet as p
-from igibson.external.pybullet_tools.utils import (
-    get_aabb_center,
-    get_aabb_extent,
-    stable_z_on_aabb,
-)
+from igibson.external.pybullet_tools.utils import (get_aabb_center,
+                                                   get_aabb_extent,
+                                                   stable_z_on_aabb)
 from igibson.object_states.aabb import AABB
 from igibson.object_states.object_state_base import CachingEnabledObjectState
 from igibson.utils.utils import restoreState

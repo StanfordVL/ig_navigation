@@ -5,15 +5,12 @@ from bddl.object_taxonomy import ObjectTaxonomy
 from igibson.object_states.robot_related_states import ObjectsInFOVOfRobot
 from igibson.objects.articulated_object import URDFObject
 from igibson.tasks.task_base import BaseTask
-from igibson.termination_conditions.termination_condition_base import (
-    BaseTerminationCondition,
-)
+from igibson.termination_conditions.termination_condition_base import \
+    BaseTerminationCondition
 from igibson.termination_conditions.timeout import Timeout
-from igibson.utils.assets_utils import (
-    get_ig_avg_category_specs,
-    get_ig_category_path,
-    get_ig_model_path,
-)
+from igibson.utils.assets_utils import (get_ig_avg_category_specs,
+                                        get_ig_category_path,
+                                        get_ig_model_path)
 from igibson.utils.utils import l2_distance
 
 from ig_navigation.floor_sampler import sample_on_floor
