@@ -17,7 +17,7 @@ metadata:
   - url: conda-forge
     used_env_vars: []
   content_hash:
-    linux-64: d6f7465e30bb32593df07703e242881d9b5677336c2f826e10656b5b2bcc4ee5
+    linux-64: f6d4628d486e271843a0e8d8cf190378d023e40515b456270514cf4e4e8ce9bc
   platforms:
   - linux-64
   sources:
@@ -1587,14 +1587,27 @@ package:
   dependencies:
     six: '>=1.5.2'
   hash:
-    sha256: fb23ed6ed84ae312df03e96c7a7cd3aa5f7e3a1ad7066fdb6cd47f1bd334196c
+    sha256: 57f1aeb65ed17dfb2f6cd717cc109910fe395133af7257a9c729c0b9604eac10
   manager: pip
   name: grpcio
   optional: false
   platform: linux-64
   source: null
-  url: https://files.pythonhosted.org/packages/7d/f9/e319f83f437aaab814880eceeeb6e91fc8f83f513fae979308a45d178d0f/grpcio-1.45.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-  version: 1.45.0
+  url: https://files.pythonhosted.org/packages/2f/04/7204fc5d7a664223911197e22f7ff60504fdd490898f456a96b434cc4483/grpcio-1.43.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  version: 1.43.0
+- category: main
+  dependencies:
+    cloudpickle: '>=1.2.0'
+    numpy: '>=1.18.0'
+  hash:
+    sha256: 0fd1ce165c754b4017e37a617b097c032b8c3feb8a0394ccc8777c7c50dddff3
+  manager: pip
+  name: gym
+  optional: false
+  platform: linux-64
+  source: null
+  url: https://files.pythonhosted.org/packages/4b/48/920cea66177b865663fde5a9390a59de0ef3b642ad98106ac1d8717d7005/gym-0.21.0.tar.gz
+  version: 0.21.0
 - category: main
   dependencies:
     numpy: '>=1.14.5'
@@ -1908,21 +1921,6 @@ package:
   version: 2.6.3
 - category: main
   dependencies:
-    cloudpickle: '>=1.2.0'
-    gym-notices: '>=0.0.4'
-    importlib-metadata: '>=4.10.0'
-    numpy: '>=1.18.0'
-  hash:
-    sha256: d0f9b9da34edbdace421c9442fc9205d03b8d15d0fb451053c766cde706d40e0
-  manager: pip
-  name: gym
-  optional: false
-  platform: linux-64
-  source: null
-  url: https://files.pythonhosted.org/packages/87/86/3f5467531428b6ce6f3c12d3121b4304d2ea1536a50775a4df036add37b8/gym-0.23.1.tar.gz
-  version: 0.23.1
-- category: main
-  dependencies:
     antlr4-python3-runtime: '4.8'
     importlib-resources: '*'
     omegaconf: '>=2.1.0,<2.2.0'
@@ -2181,8 +2179,8 @@ package:
     click: '>=7.0'
     dm-tree: '*'
     filelock: '*'
-    grpcio: '>=1.28.1'
-    gym: '*'
+    grpcio: '>=1.28.1,<=1.43.0'
+    gym: <0.22
     jsonschema: '*'
     lz4: '*'
     matplotlib: '!=3.4.3'
@@ -2198,14 +2196,14 @@ package:
     tabulate: '*'
     tensorboardx: '>=1.9'
   hash:
-    sha256: e5992bb9128a14d47d2ac104086f07bd90300707b73ce532ce71f8c4c8a2fa4d
+    sha256: ccf0e111d3e08928d5217fcd37ef149b97fe05935cbe8ceee224219730e088b6
   manager: pip
   name: ray
   optional: false
   platform: linux-64
   source: null
-  url: https://files.pythonhosted.org/packages/33/a3/67d2ded6992fb813e6a85122d20aba9d8514fe7a3e3db427806f412a4737/ray-1.10.0-cp38-cp38-manylinux2014_x86_64.whl
-  version: 1.10.0
+  url: https://files.pythonhosted.org/packages/40/12/9ce98a12b34a3cee71fd989f34925a71e5417aa7833a94e54d5e1318eca7/ray-1.11.0-cp38-cp38-manylinux2014_x86_64.whl
+  version: 1.11.0
 - category: main
   dependencies:
     absl-py: '>=0.4'

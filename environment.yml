@@ -10,7 +10,7 @@ dependencies:
   - torchaudio
   - cudatoolkit=11.3
   - pip:
-    - ray[rllib,defaults]
+    - ray[rllib,defaults]==1.11.0
     - igibson
     - bddl
     - hydra-core
