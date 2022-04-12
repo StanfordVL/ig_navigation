@@ -3,41 +3,71 @@ defaults:
   - experiment/search.yaml
   - _self_
 
+# Where to save results by default
 experiment_save_path: ray_results
 
-# Experiment params
-debug: false
+# Training params
 training_timesteps: 5000000
-mode: "headless"
-dist_tol: 0.75
-
 eval_freq: 20000
 save_freq: 50000
 resume: true
+num_envs: 4
 
-hide_robot: true
+# PPO parameters
+batch_size: 128
+gamma: 0.99
+gae_lambda: 0.9
+n_steps: 4096
+n_epochs: 30
+learning_rate: 1e-4
 
-# scene
-scene: igibson
-scene_id: Rs_int
+# Vision encoder params
+model:
+  conv_filters: [[32, 8, 4], [64, 4, 2], [64, 3, 1]]
 
-# Don't use objects for traversable map
-trav_map_type: no_obj
+# Rendered image to robot
+image_width: 128
+image_height: 128
+vertical_fov: 120
 
+# Depth image upper and lower bounds
+depth_low: 0.0
+depth_high: 10.0
+
+# Noise parameters
+depth_noise_rate: 0.0
+scan_noise_rate: 0.0
+
+# Environment params
+mode: "headless"
 seed: 0
+hide_robot: true
 clutter: false
 build_graph: true
 load_texture: true
 pybullet_load_texture: false
 should_open_all_doors: true
 texture_scale: 0.5
+trav_map_type: no_obj
 
-num_envs: 2
+# Scene params
+scene: igibson
+scene_id: Rs_int
+not_load_object_categories: [ carpet ]
+load_object_categories: [ agent, floor ]
+
+# termination condition
+max_step: 500
 
 # domain randomization
 texture_randomization_freq: null
 object_randomization_freq: null
 
+# task randomization
+randomize_agent_reset: true
+randomize_obj_reset: true
+
+# Robot parameters
 robot:
   name: Turtlefast
   action_type: discrete
@@ -55,41 +85,6 @@ robot:
       name: DifferentialDriveController
     camera:
       name: JointController
-
-
-# PPO parameters
-batch_size: 128
-gamma: 0.99
-gae_lambda: 0.9
-n_steps: 4096
-n_epochs: 30
-learning_rate: 1e-4
-
-# task
-randomize_agent_reset: true
-randomize_obj_reset: true
-
-# termination condition
-max_step: 500
-
-not_load_object_categories: [ carpet ]
-load_object_categories: [ agent, floor ]
-
-# image
-image_width: 128
-image_height: 128
-vertical_fov: 120
-
-# depth
-depth_low: 0.0
-depth_high: 10.0
-
-# sensor noise
-depth_noise_rate: 0.0
-scan_noise_rate: 0.0
-
-model:
-  conv_filters: [[32, 8, 4], [64, 4, 2], [64, 3, 1]]
 
 hydra:
   output_subdir: ${experiment_save_path}/${experiment_name}/hydra

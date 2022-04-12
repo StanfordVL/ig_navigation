@@ -199,5 +199,3 @@ class SearchTask(BaseTask):
         self.simulator.import_object(simulator_obj)
         # task
         return simulator_obj
-
-

@@ -49,30 +49,3 @@ class DummyCallback(DefaultCallbacks):
         self, *, worker, base_env, policies, episode, env_index, **kwargs
     ):
         pass
-
-
-class VideoCallback(DefaultCallbacks):
-    def on_episode_step(self, *, worker, base_env, policies, episode, **kwargs):
-        if "video_frames" not in episode.user_data:
-            episode.user_data["video_frames"] = []
-        episode.user_data["video_frames"].append(base_env.try_render())
-
-    def on_episode_end(
-        self, *, worker, base_env, policies, episode, env_index, **kwargs
-    ):
-        frames = episode.user_data["video_frames"]
-        save_path = worker.env_context["experiment_save_path"]
-        name = worker.env_context["experiment_name"]
-        video_folder = Path(save_path, name, "videos")
-        video_folder.mkdir(parents=True, exist_ok=True)
-        path = str(video_folder)
-        # video_path = Path(self.video_path)
-        video_path = f"{path}/episode-{episode.batch_builder.env_steps}.mp4"
-        video = cv2.VideoWriter(
-            video_path, cv2.VideoWriter_fourcc(*"mp4v"), 30, frames[0].shape[:2]
-        )
-
-        for frame in frames:
-            screen = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-            video.write(screen)
-        video.release()
