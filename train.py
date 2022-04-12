@@ -53,11 +53,9 @@ def main(cfg):
         "create_env_on_driver": False,
         "num_gpus": 1,
         "callbacks": MetricsCallback,
-        # "log_level": "DEBUG",
-        # "_disable_preprocessor_api": False,
     }
 
-    if cfg.eval_freq > 0 and not cfg.debug:
+    if cfg.eval_freq > 0:
         eval_ep_freq = np.round(
             num_epochs / (cfg.training_timesteps / cfg.eval_freq)
         ).astype(int)
