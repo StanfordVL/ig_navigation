@@ -1,8 +1,7 @@
+import numpy as np
+from igibson.object_states.robot_related_states import ObjectsInFOVOfRobot
 from igibson.reward_functions.reward_function_base import BaseRewardFunction
 from igibson.utils.utils import l2_distance
-import numpy as np
-
-from igibson.object_states.robot_related_states import ObjectsInFOVOfRobot
 
 
 class SearchReward(BaseRewardFunction):

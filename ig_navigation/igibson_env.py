@@ -1,16 +1,15 @@
 import argparse
 
-from igibson.envs.igibson_env import iGibsonEnv
-import numpy as np
-
-import numpy as np
-
 import gym
+import numpy as np
+from igibson.envs.igibson_env import iGibsonEnv
+from igibson.sensors.bump_sensor import BumpSensor
 from igibson.sensors.scan_sensor import ScanSensor
 from igibson.sensors.vision_sensor import VisionSensor
-from igibson.sensors.bump_sensor import BumpSensor
 from igibson.utils.constants import MAX_CLASS_COUNT, MAX_INSTANCE_COUNT
+
 from ig_navigation.search_task import SearchTask
+
 
 class SearchEnv(iGibsonEnv):
     metadata = {"render.modes": ["rgb_array"]}
@@ -113,12 +112,16 @@ class SearchEnv(iGibsonEnv):
             vision_modalities.append("normal")
         if "seg" in self.output:
             observation_space["seg"] = self.build_obs_space(
-                shape=(self.image_height, self.image_width, 1), low=0.0, high=MAX_CLASS_COUNT
+                shape=(self.image_height, self.image_width, 1),
+                low=0.0,
+                high=MAX_CLASS_COUNT,
             )
             vision_modalities.append("seg")
         if "ins_seg" in self.output:
             observation_space["ins_seg"] = self.build_obs_space(
-                shape=(self.image_height, self.image_width, 1), low=0.0, high=MAX_INSTANCE_COUNT
+                shape=(self.image_height, self.image_width, 1),
+                low=0.0,
+                high=MAX_INSTANCE_COUNT,
             )
             vision_modalities.append("ins_seg")
         if "rgb_filled" in self.output:  # use filler
@@ -134,9 +137,13 @@ class SearchEnv(iGibsonEnv):
         if "scan" in self.output:
             self.n_horizontal_rays = self.config.get("n_horizontal_rays", 128)
             self.n_vertical_beams = self.config.get("n_vertical_beams", 1)
-            assert self.n_vertical_beams == 1, "scan can only handle one vertical beam for now"
+            assert (
+                self.n_vertical_beams == 1
+            ), "scan can only handle one vertical beam for now"
             observation_space["scan"] = self.build_obs_space(
-                shape=(self.n_horizontal_rays * self.n_vertical_beams, 1), low=0.0, high=1.0
+                shape=(self.n_horizontal_rays * self.n_vertical_beams, 1),
+                low=0.0,
+                high=1.0,
             )
             scan_modalities.append("scan")
         if "occupancy_grid" in self.output:
@@ -186,7 +193,6 @@ class SearchEnv(iGibsonEnv):
             state["proprioception"] = np.array(self.robots[0].get_proprioception())
 
         return state
-
 
 
 if __name__ == "__main__":

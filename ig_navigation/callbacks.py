@@ -1,6 +1,7 @@
-from ray.rllib.agents.callbacks import DefaultCallbacks
-import cv2
 from pathlib import Path
+
+import cv2
+from ray.rllib.agents.callbacks import DefaultCallbacks
 
 
 class MetricsCallback(DefaultCallbacks):

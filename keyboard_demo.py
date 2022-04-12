@@ -2,12 +2,13 @@ from collections import defaultdict
 
 import cv2
 import hydra
+import matplotlib.pyplot as plt
 from igibson.render.mesh_renderer.mesh_renderer_settings import MeshRendererSettings
 from omegaconf import OmegaConf
 
 import ig_navigation
 from ig_navigation.igibson_env import SearchEnv
-import matplotlib.pyplot as plt
+
 
 @hydra.main(config_path=ig_navigation.CONFIG_PATH, config_name="config")
 def main(cfg):

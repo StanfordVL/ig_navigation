@@ -1,6 +1,5 @@
 import numpy as np
 import pybullet as p
-
 from igibson.external.pybullet_tools.utils import (
     get_aabb_center,
     get_aabb_extent,

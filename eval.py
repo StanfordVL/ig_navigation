@@ -1,12 +1,14 @@
 import re
-import cv2
-import hydra
-from omegaconf import OmegaConf
-import ray
-from ray.rllib.agents import ppo
-from ray.tune.registry import register_env
 from pathlib import Path
 
+import cv2
+import hydra
+import ray
+from omegaconf import OmegaConf
+from ray.rllib.agents import ppo
+from ray.tune.registry import register_env
+
+import ig_navigation
 from ig_navigation.callbacks import MetricsCallback
 
 
@@ -20,7 +22,8 @@ def igibson_env_creator(env_config):
         physics_timestep=1 / 120.0,
     )
 
-@hydra.main(config_path=ssg.CONFIG_PATH, config_name="config")
+
+@hydra.main(config_path=ig_navigation.CONFIG_PATH, config_name="config")
 def main(cfg):
     ray.init()
     env_config = OmegaConf.to_object(cfg)
@@ -68,14 +71,11 @@ def main(cfg):
     successes = 0
     frames.append(env.render())
 
-    video_folder = Path('eval', cfg.experiment_name, 'videos')
-    video_folder.mkdir(parents = True, exist_ok = True)
-    video_path = f'eval_episodes.mp4'
+    video_folder = Path("eval", cfg.experiment_name, "videos")
+    video_folder.mkdir(parents=True, exist_ok=True)
+    video_path = f"eval_episodes.mp4"
     video = cv2.VideoWriter(
-        video_path,
-        cv2.VideoWriter_fourcc(*"mp4v"),
-        15,
-        frames[0].shape[:2]
+        video_path, cv2.VideoWriter_fourcc(*"mp4v"), 15, frames[0].shape[:2]
     )
 
     for _ in range(100):
@@ -89,15 +89,15 @@ def main(cfg):
             obs, reward, done, info = env.step(action)
             episode_reward += reward
             frames.append(env.render())
-            for reward, value in info['reward_breakdown'].items():
+            for reward, value in info["reward_breakdown"].items():
                 reward_breakdown[reward] += value
-            if info['success']:
+            if info["success"]:
                 assert done
                 success = True
-                successes +=1
+                successes += 1
         trials += 1
-        print('Success: ', success)
-        print('episode reward: ', episode_reward)
+        print("Success: ", success)
+        print("episode reward: ", episode_reward)
         for key, value in reward_breakdown.items():
             print(f"{key}: {value}")
         print()
@@ -107,6 +107,7 @@ def main(cfg):
         screen = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         video.write(screen)
     video.release()
+
 
 if __name__ == "__main__":
     main()

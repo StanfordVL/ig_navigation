@@ -1,15 +1,16 @@
 import re
-import numpy as np
-import hydra
-from omegaconf import OmegaConf
-import ray
-from ray.rllib.agents import ppo
-from ray.tune.registry import register_env
 from pathlib import Path
+
+import hydra
+import numpy as np
+import ray
+from omegaconf import OmegaConf
+from ray.rllib.agents import ppo
 from ray.tune.logger import UnifiedLogger
+from ray.tune.registry import register_env
 
 import ig_navigation
-from ig_navigation.callbacks import MetricsCallback, DummyCallback
+from ig_navigation.callbacks import DummyCallback, MetricsCallback
 
 
 def igibson_env_creator(env_config):
@@ -78,7 +79,7 @@ def main(cfg):
     Path(log_path).mkdir(parents=True, exist_ok=True)
     trainer = ppo.PPOTrainer(
         config,
-        logger_creator=lambda x: UnifiedLogger(x, log_path),
+        logger_creator=lambda x: UnifiedLogger(x, log_path),  # type: ignore
     )
 
     if Path(checkpoint_path).exists():

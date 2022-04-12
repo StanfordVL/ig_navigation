@@ -1,41 +1,24 @@
+import os
+
 import numpy as np
-
 from bddl.object_taxonomy import ObjectTaxonomy
-from igibson.utils.assets_utils import (
-    get_ig_avg_category_specs,
-    get_ig_category_path,
-    get_ig_model_path,
-)
-
+from igibson.object_states.robot_related_states import ObjectsInFOVOfRobot
 from igibson.objects.articulated_object import URDFObject
 from igibson.tasks.task_base import BaseTask
-
-from ig_navigation.floor_sampler import sample_on_floor
-from ig_navigation.search_reward import SearchReward, PotentialReward, PotentialReward
-from igibson.termination_conditions.timeout import Timeout
-
 from igibson.termination_conditions.termination_condition_base import (
     BaseTerminationCondition,
 )
-from igibson.utils.utils import l2_distance
-import numpy as np
-import os
-
-from igibson.object_states.robot_related_states import ObjectsInFOVOfRobot
-
-from bddl.object_taxonomy import ObjectTaxonomy
+from igibson.termination_conditions.timeout import Timeout
 from igibson.utils.assets_utils import (
     get_ig_avg_category_specs,
     get_ig_category_path,
     get_ig_model_path,
 )
+from igibson.utils.utils import l2_distance
 
-from igibson.objects.articulated_object import URDFObject
-from igibson.tasks.task_base import BaseTask
+from ig_navigation.floor_sampler import sample_on_floor
+from ig_navigation.search_reward import PotentialReward, SearchReward
 
-from igibson.termination_conditions.timeout import Timeout
-
-import os
 
 class SearchTermination(BaseTerminationCondition):
     """
@@ -62,7 +45,10 @@ class SearchTermination(BaseTerminationCondition):
             )
             < self.dist_tol
         )
-        in_view = (task.target_obj.main_body in env.robots[0].states[ObjectsInFOVOfRobot].get_value())
+        in_view = (
+            task.target_obj.main_body
+            in env.robots[0].states[ObjectsInFOVOfRobot].get_value()
+        )
         done = done and in_view
         success = done
         return done, success
@@ -100,9 +86,7 @@ class SearchTask(BaseTask):
 
     def choose_task(self):
         # obj_pro = self.import_object(wordnet_category = 'microwave.n.02' , model='7128')
-        obj_pro = self.import_object(
-            igibson_category="microwave", model="7320"
-        )
+        obj_pro = self.import_object(igibson_category="microwave", model="7320")
         self.target_obj = obj_pro
         room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id)))
         sample_on_floor(obj_pro, self.scene, room=room)
