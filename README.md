@@ -2,6 +2,7 @@
 
 * Ubuntu (18.04 or latest LTS release)
 * Up-to-date Nvidia driver
+* 64 GB ram (~ 6 gb per parallel environment)
 
 # Installation 
 
