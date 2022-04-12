@@ -1,4 +1,22 @@
+# Requirements
+
+* Ubuntu (18.04 or latest LTS release)
+* Up-to-date Nvidia driver
+
 # Installation 
+
+Deterministic installation via conda-lock:
+
+```bash
+git clone git@github.com:mjlbach/ig_navigation
+conda install -c conda-forge 'conda-lock[pip_support]'
+conda-lock install -n ig_navigation
+conda activate ig_navigation
+pip install -e .
+```
+
+Regular installation (reproudcible result not guaranteed)
+
 ```bash
 git clone git@github.com:mjlbach/ig_navigation
 conda env create -f environment.yml
@@ -20,10 +38,12 @@ This can be done automatically via a `.envrc` file and [direnv](https://direnv.n
 Uses hydra, select the experiment with +experiment=path
 
 ```bash
-python train.py +experiment=search ++experiment_name=my_experiment_name ++experiment_save_path=$(pwd)/ray_results
+python train.py +experiment=navigation ++experiment_name=my_experiment_name ++experiment_save_path=$(pwd)/ray_results
 ```
 
-# Updating
+# Reproducibility notes
+
+Developer dependencies are locked with conda-lock
 ```bash
-conda env update --file environment.yml --prune
+conda-lock -c pytorch -c conda-forge -p linux-64
 ```

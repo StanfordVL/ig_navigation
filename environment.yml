@@ -1,21 +1,17 @@
 name: ig_navigation
 channels:
   - pytorch
-  - nvidia
   - conda-forge
 dependencies:
   - python=3.8
   - pip
-  - pytorch==1.9.1
+  - pytorch=1.11.0
   - torchvision
   - torchaudio
-  - cudatoolkit=11.1
-  - gym
-  - hydra-core
-  - grpcio=1.43.0
-  - ffmpeg > 4.4
-  - numpy=1.20.3
+  - cudatoolkit=11.3
   - pip:
     - ray[rllib,defaults]
     - igibson
+    - bddl
+    - hydra-core
     - tensorboard
