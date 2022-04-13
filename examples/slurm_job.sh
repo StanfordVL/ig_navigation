@@ -8,7 +8,7 @@
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:1
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=m.j.lbach@gmail.com
+#SBATCH --mail-user=your_email@mail.com
 
 source ~/.bashrc  
 conda activate ig_navigation
