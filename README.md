@@ -74,3 +74,5 @@ Developer dependencies are locked with conda-lock
 ```bash
 conda-lock -c pytorch -c conda-forge -p linux-64
 ```
+
+Running on 8 environments, the policy should convert to ~95% success rate on single object visual navigation in the empty Rs_int scene after about 300,000 environment steps, which takes approximately 1 hour on an RTX 3090/AMD 5900x processor.
