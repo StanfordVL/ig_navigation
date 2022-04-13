@@ -51,7 +51,7 @@ This can be done automatically via a `.envrc` file and [direnv](https://direnv.n
 To run with the default settings (experiments will be dumped to `ray_results` in the current folder:
 
 ```bash
-python train.py
+python train.py ++experiment_save_path=$HOME/ray_results
 ```
 
 This repo uses [hydra](https://hydra.cc/) to allow a mix of declarative and argument based configuration,

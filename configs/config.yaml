@@ -3,9 +3,6 @@ defaults:
   - experiment/search.yaml
   - _self_
 
-# Where to save results by default
-experiment_save_path: ray_results
-
 # Training params
 training_timesteps: 5000000
 eval_freq: 20000
