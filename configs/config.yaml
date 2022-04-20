@@ -21,6 +21,7 @@ learning_rate: 1e-4
 # Vision encoder params
 model:
   custom_model: complex_input_network
+  post_fcnet_hiddens: [128, 128, 128]
   conv_filters: [[32, 8, 4], [64, 4, 2], [64, 3, 1]]
 
 # Rendered image to robot
