@@ -3,9 +3,6 @@ experiment_name: search
 
 dist_tol: 1
 
-output:
-- rgb
-- depth
 
 # rewards
 reward_functions:

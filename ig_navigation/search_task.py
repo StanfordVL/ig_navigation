@@ -120,7 +120,7 @@ class SearchTask(BaseTask):
             )
             sample_on_floor(env.robots[0], env.simulator.scene, room)
         else:
-            env.land(env.robots[0], [1.0, 2.0, 0.0], [0, 0, 0])
+            env.land(env.robots[0], [0.24018, -1.88324, 0.12162], [0, 0, 0])
 
     def reset_scene(self, env):
         # This is absolutely critical, reset doors

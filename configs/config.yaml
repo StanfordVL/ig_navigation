@@ -67,23 +67,101 @@ randomize_agent_reset: true
 randomize_obj_reset: true
 
 # Robot parameters
+# robot:
+#   name: Turtlefast
+#   action_type: discrete
+#   action_normalize: true
+#   proprio_obs:
+#     - trunk_qpos
+#     - camera_qpos
+#   reset_joint_pos: null
+#   base_name: null
+#   scale: 1.0
+#   self_collision: true
+#   rendering_params: null
+#   controller_config:
+#     base:
+#       name: DifferentialDriveController
+#     camera:
+#       name: JointController
 robot:
-  name: Turtlefast
-  action_type: discrete
+  name: Tiago
+  action_type: continuous
   action_normalize: true
   proprio_obs:
+    - eef_left_pos
+    - eef_left_quat
+    - eef_right_pos
+    - eef_right_quat
     - trunk_qpos
-    - camera_qpos
-  reset_joint_pos: null
-  base_name: null
-  scale: 1.0
-  self_collision: true
-  rendering_params: null
+    - arm_left_qpos_sin
+    - arm_left_qpos_cos
+    - gripper_left_qpos
+    - arm_right_qpos_sin
+    - arm_right_qpos_cos
+    - gripper_right_qpos
+    - grasp_left
+    - grasp_right
+  # reset_joint_pos: null
+  # base_name: null
+  # scale: 1.0
+  # self_collision: false
+  # rendering_params: null
+  # grasping_mode: physical
+  # rigid_trunk: false
+  # default_trunk_offset: 0.365
+  # default_arm_pose: vertical
   controller_config:
     base:
-      name: DifferentialDriveController
+      name: JointController
+    arm_left:
+      name: JointController
+      motor_type: position
+      fixed: true
+      default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
+    gripper_left:
+      name: JointController
+      motor_type: position
+      fixed: true
+    arm_right:
+      name: JointController
+      motor_type: position
+      fixed: true
+      default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
+    gripper_right:
+      name: JointController
+      motor_type: position
+      fixed: true
     camera:
       name: JointController
+      motor_type: position
+      fixed: true
+      default_command: [0.0, 0.0]
+
+# sensor spec
+output: [rgb, depth, scan, scan_rear]
+# image
+# ASUS Xtion PRO LIVE
+# https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE
+# fisheye: false
+# image_width: 640
+# image_height: 480
+# vertical_fov: 45
+# depth
+# depth_low: 0.8
+# depth_high: 3.5
+# scan
+# Hokuyo URG-04LX-UG01
+# https://www.hokuyo-aut.jp/search/single.php?serial=166
+# n_horizontal_rays is originally 683, sub-sampled 1/3
+# n_horizontal_rays: 228
+# n_vertical_beams: 1
+
+laser_linear_range: 10.0
+laser_angular_range: 180.0
+min_laser_dist: 0.0
+laser_link_name: base_front_laser_link
+laser_link_rear_name: base_rear_laser_link
 
 hydra:
   output_subdir: ${experiment_save_path}/${experiment_name}/hydra
