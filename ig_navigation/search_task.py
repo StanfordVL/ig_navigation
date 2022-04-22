@@ -64,6 +64,7 @@ class SearchTask(BaseTask):
         self.reward_functions = []
         self.reward_functions.append(SearchReward(self.config))
         self.reward_functions.append(PotentialReward(self.config))
+        self.is_interactive = self.config["scene"] == "igibson"
 
         self.termination_conditions = [
             Timeout(self.config),
@@ -85,7 +86,7 @@ class SearchTask(BaseTask):
         # obj_pro = self.import_object(wordnet_category = 'microwave.n.02' , model='7128')
         obj_pro = self.import_object(igibson_category="microwave", model="7320")
         self.target_obj = obj_pro
-        room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id)))
+        room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id))) if self.is_interactive else None
         sample_on_floor(obj_pro, self.scene, room=room)
 
     def get_reward(self, env, _collision_links=[], _action=None, info={}):
@@ -113,7 +114,7 @@ class SearchTask(BaseTask):
 
     def reset_agent(self, env):
         env.robots[0].reset()
-        if self.config.get("randomize_agent_reset", False):
+        if self.is_interactive and self.config.get("randomize_agent_reset", False):
             room = np.random.choice(
                 np.array(list(self.scene.room_ins_name_to_ins_id.keys()))
             )
@@ -123,9 +124,10 @@ class SearchTask(BaseTask):
 
     def reset_scene(self, env):
         # This is absolutely critical, reset doors
-        env.scene.reset_scene_objects()
+        if self.is_interactive:
+            env.scene.reset_scene_objects()
 
-        if self.config.get("randomize_obj_reset", True):
+        if self.is_interactive and self.config.get("randomize_obj_reset", True):
             room = np.random.choice(
                 np.array(list(self.scene.room_ins_name_to_ins_id.keys()))
             )
@@ -161,7 +163,7 @@ class SearchTask(BaseTask):
 
         model_path = get_ig_model_path(igibson_category, model)
         filename = os.path.join(model_path, model + ".urdf")
-        num_new_obj = len(self.scene.objects_by_name)
+        num_new_obj = len(self.scene.objects_by_name) if self.is_interactive else 1
         obj_name = "{}_{}".format(igibson_category, num_new_obj)
         # create the object and set the initial position to be far-away
         simulator_obj = URDFObject(

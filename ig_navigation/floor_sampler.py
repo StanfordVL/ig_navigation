@@ -61,7 +61,8 @@ def sample_on_floor(
         old_pos = np.array([200, 200, 200])
         objA.set_position_orientation(old_pos, orientation)
 
-        _, pos = scene.get_random_point_by_room_instance(room)
+        # _, pos = scene.get_random_point_by_room_instance(room)
+        pos = np.array([0.0, 0.0, 0.0])
 
         pos[2] = stable_z_on_aabb(
             objA.get_body_ids()[0], ([0, 0, pos[2]], [0, 0, pos[2]])
@@ -72,7 +73,7 @@ def sample_on_floor(
         success = not detect_collision(
             objA.get_body_ids()[0]
         )  # len(p.getContactPoints(objA.get_body_id())) == 0
-
+        break
         if success:
             break
         else:

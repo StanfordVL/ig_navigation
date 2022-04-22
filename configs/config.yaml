@@ -38,7 +38,7 @@ depth_noise_rate: 0.0
 scan_noise_rate: 0.0
 
 # Environment params
-mode: "headless"
+mode: "gui_interactive"
 seed: 0
 hide_robot: true
 clutter: false
@@ -50,8 +50,8 @@ texture_scale: 0.5
 trav_map_type: no_obj
 
 # Scene params
-scene: igibson
-scene_id: Rs_int
+scene: gibson
+scene_id: gates_kitchenette
 not_load_object_categories: [ carpet ]
 load_object_categories: [ agent, floor ]
 
