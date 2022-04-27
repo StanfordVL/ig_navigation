@@ -5,7 +5,7 @@ from igibson.external.pybullet_tools.utils import (get_aabb_center,
                                                    stable_z_on_aabb)
 from igibson.object_states.aabb import AABB
 from igibson.object_states.object_state_base import CachingEnabledObjectState
-from igibson.utils.utils import restoreState
+from igibson.utils.utils import l2_distance, restoreState
 
 
 def get_center_extent(obj_states):
@@ -62,7 +62,7 @@ def sample_on_floor(
         objA.set_position_orientation(old_pos, orientation)
 
         # _, pos = scene.get_random_point_by_room_instance(room)
-        pos = np.array([0.0, 0.0, 0.0])
+        pos = np.array([0.0, 0.0, -1.0])
 
         pos[2] = stable_z_on_aabb(
             objA.get_body_ids()[0], ([0, 0, pos[2]], [0, 0, pos[2]])
@@ -91,3 +91,58 @@ def sample_on_floor(
                 break
 
     return success
+
+def sample_initial_pose_and_target_pos(env):
+    """
+    Sample robot initial pose and target position
+
+    :param env: environment instance
+    :return: initial pose and target position
+    """
+    _, initial_pos = env.scene.get_random_point(floor=0)
+    max_trials = 100
+    dist = 0.0
+    for _ in range(max_trials):
+        _, target_pos = env.scene.get_random_point(floor=0)
+        if env.scene.build_graph:
+            _, dist = env.scene.get_shortest_path(
+                0, initial_pos[:2], target_pos[:2], entire_path=False
+            )
+        else:
+            dist = l2_distance(initial_pos, target_pos)
+        if 1.0 < dist < 10.0:
+            break
+    # if not (self.target_dist_min < dist < self.target_dist_max):
+        # log.warning("Failed to sample initial and target positions")
+    initial_orn = np.array([0, 0, np.random.uniform(0, np.pi * 2)])
+    # log.debug("Sampled initial pose: {}, {}".format(initial_pos, initial_orn))
+    # log.debug("Sampled target position: {}".format(target_pos))
+    return initial_pos, initial_orn, target_pos
+
+def reset_agent(env):
+    """
+    Reset robot initial pose.
+    Sample initial pose and target position, check validity, and land it.
+
+    :param env: environment instance
+    """
+    reset_success = False
+    max_trials = 100
+
+    # cache pybullet state
+    # TODO: p.saveState takes a few seconds, need to speed up
+    state_id = p.saveState()
+    for i in range(max_trials):
+        initial_pos, initial_orn, target_pos = sample_initial_pose_and_target_pos(env)
+        reset_success = env.test_valid_position(
+            env.robots[0], initial_pos, initial_orn
+        ) and env.test_valid_position(env.robots[0], target_pos)
+        restoreState(state_id)
+        if reset_success:
+            break
+
+    # if not reset_success:
+        # log.warning("WARNING: Failed to reset robot without collision")
+
+    p.removeState(state_id)
+    return initial_pos, initial_orn, target_pos

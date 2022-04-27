@@ -38,7 +38,7 @@ depth_noise_rate: 0.0
 scan_noise_rate: 0.0
 
 # Environment params
-mode: "gui_interactive"
+mode: "headless"
 seed: 0
 hide_robot: true
 clutter: false
@@ -46,8 +46,8 @@ build_graph: true
 load_texture: true
 pybullet_load_texture: false
 should_open_all_doors: true
-texture_scale: 0.5
-trav_map_type: no_obj
+texture_scale: 1.0
+# trav_map_type: no_obj
 
 # Scene params
 scene: gibson
@@ -102,7 +102,7 @@ robot:
     - gripper_right_qpos
     - grasp_left
     - grasp_right
-  # reset_joint_pos: null
+  # reset_joint_pos: "tuck"
   # base_name: null
   # scale: 1.0
   # self_collision: false
@@ -117,29 +117,29 @@ robot:
     arm_left:
       name: JointController
       motor_type: position
-      fixed: true
+      use_constant_goal: true
       default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
     gripper_left:
       name: JointController
       motor_type: position
-      fixed: true
+      use_constant_goal: true
     arm_right:
       name: JointController
       motor_type: position
-      fixed: true
+      use_constant_goal: true
       default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
     gripper_right:
       name: JointController
       motor_type: position
-      fixed: true
+      use_constant_goal: true
     camera:
       name: JointController
       motor_type: position
-      fixed: true
+      use_constant_goal: true
       default_command: [0.0, 0.0]
 
 # sensor spec
-output: [rgb, depth, scan, scan_rear]
+output: [scan, scan_rear]
 # image
 # ASUS Xtion PRO LIVE
 # https://www.asus.com/us/3D-Sensor/Xtion_PRO_LIVE

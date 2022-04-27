@@ -13,6 +13,7 @@ from igibson.utils.assets_utils import (get_ig_avg_category_specs,
                                         get_ig_model_path)
 from igibson.utils.utils import l2_distance
 
+from ig_navigation import floor_sampler
 from ig_navigation.floor_sampler import sample_on_floor
 from ig_navigation.search_reward import PotentialReward, SearchReward
 
@@ -113,14 +114,15 @@ class SearchTask(BaseTask):
         return reward, info
 
     def reset_agent(self, env):
-        env.robots[0].reset()
         if self.is_interactive and self.config.get("randomize_agent_reset", False):
+            env.robots[0].reset()
             room = np.random.choice(
                 np.array(list(self.scene.room_ins_name_to_ins_id.keys()))
             )
             sample_on_floor(env.robots[0], env.simulator.scene, room)
         else:
-            env.land(env.robots[0], [0.24018, -1.88324, 0.12162], [0, 0, 0])
+            # env.land(env.robots[0], [0.24018, -1.88324, 0.12162], [0, 0, 0])
+            floor_sampler.reset_agent(env)
 
     def reset_scene(self, env):
         # This is absolutely critical, reset doors
@@ -133,9 +135,10 @@ class SearchTask(BaseTask):
             )
             sample_on_floor(self.target_obj, self.scene, room=room)
         else:
-            self.target_obj.set_position(
-                np.array([0.79999999, -3.19999984, 0.48399325])
-            )
+            # self.target_obj.set_position(
+            #     np.array([0.79999999, -3.19999984, 0.48399325])
+            # )
+            pass
 
     def import_object(
         self,

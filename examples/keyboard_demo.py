@@ -1,4 +1,5 @@
 from collections import defaultdict
+from math import floor
 
 import cv2
 import hydra
@@ -9,7 +10,7 @@ from omegaconf import OmegaConf
 
 import ig_navigation
 from ig_navigation.igibson_env import SearchEnv
-
+from ig_navigation import floor_sampler
 
 @hydra.main(config_path=ig_navigation.CONFIG_PATH, config_name="config")
 def main(cfg):
@@ -31,6 +32,15 @@ def main(cfg):
         print("Episode: {}".format(episode))
         episode_reward = 0
         state = env.reset()
+        # floor_sampler.sample_on_floor(env.robots[0].base_link, None, None)
+        # initial_pos, initial_orn, target_pos = floor_sampler.sample_initial_pose_and_target_pos(env)
+        # env.robots[0].set_position_orientation(initial_pos, initial_orn)
+        floor_sampler.reset_agent(env)
+        
+        # obs_sp = env.observation_space
+        # print(state['scan_rear'].shape, state['scan_rear'].dtype)
+        # print(obs_sp['scan_rear'].shape, obs_sp['scan_rear'].dtype)
+        # 1/0
         reward_breakdown = defaultdict(lambda: 0)
 
         for idx in range(500):
