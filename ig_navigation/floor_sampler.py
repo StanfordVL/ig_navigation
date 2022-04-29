@@ -145,6 +145,12 @@ def reset_agent(env):
 
     if not reset_success:
         print("WARNING: Failed to reset robot without collision")
+        # TODO: setting the variables to None so that any code relying on these values fails
+        # It is maybe better to create an assert here as we do not want to continue if we couldn't sample
+        target_pos = None
+        initial_pos = None
+        initial_orn = None
+
     target_pos = [0,0,0]
     p.removeState(state_id)
     return initial_pos, initial_orn, target_pos
