@@ -90,6 +90,10 @@ class SearchTask(BaseTask):
         if self.is_interactive:
             room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id)))
             sample_on_floor(obj_pro, self.scene, room=room)
+        else:   #Set the position manually
+            self.target_obj.set_position(
+                np.array([0.79999999, -3.19999984, 0.48399325])
+            )
 
     def get_reward(self, env, _collision_links=[], _action=None, info={}):
         """
