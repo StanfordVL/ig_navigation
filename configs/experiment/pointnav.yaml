@@ -1,0 +1,14 @@
+# @package _global_
+experiment_name: pointnav
+
+dist_tol: 1
+
+
+# rewards
+reward_functions:
+- search
+- potential
+
+# Reward scaling
+success_reward_scaling: 10.0
+potential_reward_scaling: 1.0
