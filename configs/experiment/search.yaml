@@ -1,6 +1,8 @@
 # @package _global_
 experiment_name: search
-task_type: objectnav
+
+#task
+task: object_nav
 
 dist_tol: 1
 

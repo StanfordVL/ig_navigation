@@ -1,6 +1,5 @@
 # @package _global_
 experiment_name: pointnav
-task_type: pointnav
 
 # task
 task: point_nav_random
