@@ -9,6 +9,7 @@ from igibson.sensors.vision_sensor import VisionSensor
 from igibson.utils.constants import MAX_CLASS_COUNT, MAX_INSTANCE_COUNT
 
 from ig_navigation.search_task import SearchTask
+from igibson.tasks.point_nav_random_task import PointNavRandomTask
 
 
 class SearchEnv(iGibsonEnv):
@@ -43,7 +44,12 @@ class SearchEnv(iGibsonEnv):
             "object_randomization_freq", None
         )
 
-        self.task = SearchTask(self)
+        task_type = self.config.get("task")
+
+        if task_type == "object_nav":
+            self.task = SearchTask(self)
+        elif task_type == "point_nav_random":
+            self.task = PointNavRandomTask(self)
 
     def render(self, mode):
         assert self.simulator.renderer != None
