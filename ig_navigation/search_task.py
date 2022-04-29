@@ -87,8 +87,9 @@ class SearchTask(BaseTask):
         # obj_pro = self.import_object(wordnet_category = 'microwave.n.02' , model='7128')
         obj_pro = self.import_object(igibson_category="microwave", model="7320")
         self.target_obj = obj_pro
-        room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id))) if self.is_interactive else None
-        sample_on_floor(obj_pro, self.scene, room=room)
+        if self.is_interactive:
+            room = np.random.choice(np.array(list(self.scene.room_ins_name_to_ins_id)))
+            sample_on_floor(obj_pro, self.scene, room=room)
 
     def get_reward(self, env, _collision_links=[], _action=None, info={}):
         """
@@ -121,8 +122,9 @@ class SearchTask(BaseTask):
             )
             sample_on_floor(env.robots[0], env.simulator.scene, room)
         else:
-            # env.land(env.robots[0], [0.24018, -1.88324, 0.12162], [0, 0, 0])
-            floor_sampler.reset_agent(env)
+            env.robots[0].reset()
+            initial_pos, initial_orn, target_pos = floor_sampler.reset_agent(env)
+            env.robots[0].set_position_orientation(initial_pos, [0,0,0,1])
 
     def reset_scene(self, env):
         # This is absolutely critical, reset doors
@@ -135,10 +137,9 @@ class SearchTask(BaseTask):
             )
             sample_on_floor(self.target_obj, self.scene, room=room)
         else:
-            # self.target_obj.set_position(
-            #     np.array([0.79999999, -3.19999984, 0.48399325])
-            # )
-            pass
+            self.target_obj.set_position(
+                np.array([0.79999999, -3.19999984, 0.48399325])
+            )
 
     def import_object(
         self,

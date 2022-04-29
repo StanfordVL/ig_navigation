@@ -61,8 +61,8 @@ def sample_on_floor(
         old_pos = np.array([200, 200, 200])
         objA.set_position_orientation(old_pos, orientation)
 
-        # _, pos = scene.get_random_point_by_room_instance(room)
-        pos = np.array([0.0, 0.0, -1.0])
+        _, pos = scene.get_random_point_by_room_instance(room)
+        # pos = np.array([0.0, 0.0, -1.0])
 
         pos[2] = stable_z_on_aabb(
             objA.get_body_ids()[0], ([0, 0, pos[2]], [0, 0, pos[2]])
@@ -133,16 +133,18 @@ def reset_agent(env):
     # TODO: p.saveState takes a few seconds, need to speed up
     state_id = p.saveState()
     for i in range(max_trials):
-        initial_pos, initial_orn, target_pos = sample_initial_pose_and_target_pos(env)
+        # initial_pos, initial_orn, target_pos = sample_initial_pose_and_target_pos(env)
+        _, initial_pos = env.scene.get_random_point(floor=0)
+        initial_orn = [0,0,0]
         reset_success = env.test_valid_position(
             env.robots[0], initial_pos, initial_orn
-        ) and env.test_valid_position(env.robots[0], target_pos)
+        )# and env.test_valid_position(env.robots[0], target_pos)
         restoreState(state_id)
         if reset_success:
             break
 
-    # if not reset_success:
-        # log.warning("WARNING: Failed to reset robot without collision")
-
+    if not reset_success:
+        print("WARNING: Failed to reset robot without collision")
+    target_pos = [0,0,0]
     p.removeState(state_id)
     return initial_pos, initial_orn, target_pos
