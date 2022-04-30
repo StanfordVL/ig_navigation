@@ -20,13 +20,22 @@ ModelCatalog.register_custom_model("complex_input_network", ComplexInputNetwork)
 
 def igibson_env_creator(env_config):
     from ig_navigation.igibson_env import SearchEnv
+    from igibson.envs.igibson_env import iGibsonEnv
 
-    return SearchEnv(
-        config_file=env_config,
-        mode=env_config["mode"],
-        action_timestep=1 / 10.0,
-        physics_timestep=1 / 120.0,
-    )
+    if env_config["task"] == "object_nav":
+        return SearchEnv(
+            config_file=env_config,
+            mode=env_config["mode"],
+            action_timestep=1 / 10.0,
+            physics_timestep=1 / 120.0,
+        )
+    else:
+        return iGibsonEnv(
+            config_file=env_config,
+            mode=env_config["mode"],
+            action_timestep=1 / 10.0,
+            physics_timestep=1 / 120.0,
+        )
 
 
 @hydra.main(config_path=ig_navigation.CONFIG_PATH, config_name="config")
@@ -56,8 +65,8 @@ def main(cfg):
         "sgd_minibatch_size": cfg.batch_size,
         "gamma": cfg.gamma,
         "create_env_on_driver": False,
-        "num_gpus": 1,
-        "callbacks": MetricsCallback,
+        "num_gpus": 0,
+        "callbacks": DummyCallback,
     }
 
     if cfg.eval_freq > 0:

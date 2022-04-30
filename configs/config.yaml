@@ -1,6 +1,6 @@
 # Whatever is in this file will override the experiment
 defaults:
-  - experiment/search.yaml
+  - experiment/point_nav_fixed_random.yaml
   - _self_
 
 # Training params
@@ -38,7 +38,7 @@ depth_noise_rate: 0.0
 scan_noise_rate: 0.0
 
 # Environment params
-mode: "headless"
+mode: "gui_interactive"
 seed: 0
 hide_robot: true
 clutter: false
@@ -108,7 +108,7 @@ robot:
   # self_collision: false
   # rendering_params: null
   # grasping_mode: physical
-  # rigid_trunk: false
+  rigid_trunk: true
   # default_trunk_offset: 0.365
   # default_arm_pose: vertical
   controller_config:

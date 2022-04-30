@@ -1,0 +1,20 @@
+# @package _global_
+experiment_name: point_nav_fixed_random
+
+# task
+task: point_nav_fixed_random
+goal_format: polar
+task_obs_dim: 4
+target_pos: [-1.0, 1.0, 0.0]
+
+dist_tol: 1
+
+
+# rewards
+reward_functions:
+- search
+- potential
+
+# Reward scaling
+success_reward_scaling: 10.0
+potential_reward_scaling: 1.0
