@@ -117,26 +117,26 @@ robot:
     arm_left:
       name: JointController
       motor_type: position
-      use_constant_goal: true
-      default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
+      use_constant_goal_position: true
+      constant_goal_position: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
     gripper_left:
       name: JointController
       motor_type: position
-      use_constant_goal: true
+      use_constant_goal_position: true
     arm_right:
       name: JointController
       motor_type: position
-      use_constant_goal: true
-      default_command: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
+      use_constant_goal_position: true
+      constant_goal_position: [-1.17, 1.57, 2.74, 1.57, 1.57, -1.41, 0.0]
     gripper_right:
       name: JointController
       motor_type: position
-      use_constant_goal: true
+      use_constant_goal_position: true
     camera:
       name: JointController
       motor_type: position
-      use_constant_goal: true
-      default_command: [0.0, 0.0]
+      use_constant_goal_position: true
+      constant_goal_position: [0.0, 0.0]
 
 # sensor spec
 output: [scan, scan_rear]
